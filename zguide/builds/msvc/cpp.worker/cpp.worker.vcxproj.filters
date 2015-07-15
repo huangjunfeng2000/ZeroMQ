@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\examples\C++\wuproxy.cpp">
+      <Filter>c++</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\mdworker.cpp">
+      <Filter>c++</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\ppworker.cpp">
+      <Filter>c++</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\rrworker.cpp">
+      <Filter>c++</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\spworker.cpp">
+      <Filter>c++</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\taskwork.cpp">
+      <Filter>c++</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\taskwork2.cpp">
+      <Filter>c++</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\mdworker_GDS.cpp">
+      <Filter>GDS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\jsonAPI.cpp">
+      <Filter>GDS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\msgdefine.cpp">
+      <Filter>GDS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\dbmsgmanager.cpp">
+      <Filter>GDS</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="c++">
+      <UniqueIdentifier>{bb899b6b-7cf4-4698-b62b-020715c8ab25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GDS">
+      <UniqueIdentifier>{b053eeb8-1458-4a10-ab64-4c3b728a5c33}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\examples\C++\mdwrkapi.hpp">
+      <Filter>c++</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\C++\mdwrkapi_GDS.hpp">
+      <Filter>GDS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\C++\jsonAPI.h">
+      <Filter>GDS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\C++\msgdefine.h">
+      <Filter>GDS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\C++\dbmsgmanager.h">
+      <Filter>GDS</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

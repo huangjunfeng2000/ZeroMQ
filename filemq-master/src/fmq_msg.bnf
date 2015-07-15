@@ -1,0 +1,83 @@
+The following ABNF grammar defines the The FileMQ Protocol:
+
+    fmq_msg         = *( OHAI | OHAI-OK | ICANHAZ | ICANHAZ-OK | NOM | CHEEZBURGER | HUGZ | HUGZ-OK | KTHXBAI | SRSLY | RTFM )
+
+    ;  Client opens peering                                                  
+
+    OHAI            = signature %d1 protocol version
+    signature       = %xAA %xA3             ; two octets
+    protocol        = string                ; Constant "FILEMQ"
+    version         = number-2              ; Protocol version 2
+
+    ;  Server grants the client access                                       
+
+    OHAI-OK         = signature %d4
+
+    ;  Client subscribes to a path                                           
+
+    ICANHAZ         = signature %d5 path options cache
+    path            = longstr               ; Full path or path prefix
+    options         = hash                  ; Subscription options
+    cache           = hash                  ; File SHA-1 signatures
+
+    ;  Server confirms the subscription                                      
+
+    ICANHAZ-OK      = signature %d6
+
+    ;  Client sends credit to the server                                     
+
+    NOM             = signature %d7 credit sequence
+    credit          = number-8              ; Credit, in bytes
+    sequence        = number-8              ; Chunk sequence, 0 and up
+
+    ;  The server sends a file chunk                                         
+
+    CHEEZBURGER     = signature %d8 sequence operation filename offset eof headers chunk
+    sequence        = number-8              ; File offset in bytes
+    operation       = number-1              ; Create=%d1 delete=%d2
+    filename        = longstr               ; Relative name of file
+    offset          = number-8              ; File offset in bytes
+    eof             = number-1              ; Last chunk in file?
+    headers         = hash                  ; File properties
+    chunk           = chunk                 ; Data chunk
+
+    ;  Client sends a heartbeat                                              
+
+    HUGZ            = signature %d9
+
+    ;  Server answers a heartbeat                                            
+
+    HUGZ-OK         = signature %d10
+
+    ;  Client closes the peering                                             
+
+    KTHXBAI         = signature %d11
+
+    ;  Server refuses client due to access rights                            
+
+    SRSLY           = signature %d128 reason
+    reason          = string                ; Printable explanation, 255 characters
+
+    ;  Server tells client it sent an invalid message                        
+
+    RTFM            = signature %d129 reason
+    reason          = string                ; Printable explanation, 255 characters
+
+    ; A list of name/value pairs
+    hash            = hash-count *( hash-name hash-value )
+    hash-count      = number-4
+    hash-value      = longstr
+    hash-name       = string
+
+    ; A chunk has 4-octet length + binary contents
+    chunk           = number-4 *OCTET
+
+    ; Strings are always length + text contents
+    string          = number-1 *VCHAR
+    longstr         = number-4 *VCHAR
+
+    ; Numbers are unsigned integers in network byte order
+    number-1        = 1OCTET
+    number-2        = 2OCTET
+    number-4        = 4OCTET
+    number-8        = 8OCTET

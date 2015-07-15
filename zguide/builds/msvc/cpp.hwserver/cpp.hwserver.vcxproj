@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B5A91C3D-77D1-4C7A-8AD6-83EDBF253B1A}</ProjectGuid>
+    <RootNamespace>cpphwserver</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\..\cppzmq;..\..\..\..\zeromq3-x\include;..\..\..\..\libzmq\include;..\..\..\..\czmq\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\..\zeromq3-x\lib\Win32;..\..\..\..\libzmq\bin;..\..\..\..\czmq\bin\Win32\Debug\v100\dynamic;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libzmq.lib;czmq.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\..\..\cppzmq;..\..\..\..\zeromq3-x\include;..\..\..\..\libzmq\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>libzmq.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\zeromq3-x\lib\Win32;..\..\..\..\libzmq\bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\examples\C++\hwserver.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\identity.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\jsonAPI.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\lbbroker.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\lpserver.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\mdbroker.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\mdbroker_GDS.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\msgdefine.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\msgqueue.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\mtrelay.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\mtserver.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\ppqueue.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\psenvpub.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\rrbroker.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\rtdealer.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\rtreq.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\spqueue.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\suisnail.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\syncpub.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\tasksink.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\tasksink2.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\tripping.cpp" />
+    <ClCompile Include="..\..\..\examples\C++\wuserver.cpp" />
+    <ClCompile Include="..\..\..\examples\C\clonesrv1.c" />
+    <ClCompile Include="..\..\..\examples\C\espresso.c" />
+    <ClCompile Include="..\..\..\examples\C\kvsimple.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\examples\C++\jsonAPI.h" />
+    <ClInclude Include="..\..\..\examples\C++\msgdefine.h" />
+    <ClInclude Include="..\..\..\examples\C\kvsimple.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

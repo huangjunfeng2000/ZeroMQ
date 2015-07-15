@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding = "Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="ZERO_CHECK"
+	ProjectGUID="{86A74573-5696-42EE-8E51-CDB2CA98E631}"
+	Keyword="Win32Proj">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="Debug"
+			IntermediateDirectory="ZERO_CHECK.dir\Debug"
+			ConfigurationType="10"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				AssemblerListingLocation="Debug/"
+				ExceptionHandling="0"
+				PreprocessorDefinitions="CMAKE_INTDIR=\&quot;Debug\&quot;"
+				ObjectFile="$(IntDir)\"
+/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				PreprocessorDefinitions="CMAKE_INTDIR=\&quot;Debug\&quot;"/>
+			<Tool
+				Name="VCMIDLTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				MkTypLibCompatible="false"
+				TargetEnvironment="1"
+				GenerateStublessProxies="true"
+				TypeLibraryName="$(InputName).tlb"
+				OutputDirectory="$(IntDir)"
+				HeaderFileName="$(InputName).h"
+				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName="$(InputName)_p.c"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="Release"
+			IntermediateDirectory="ZERO_CHECK.dir\Release"
+			ConfigurationType="10"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				AssemblerListingLocation="Release/"
+				ExceptionHandling="0"
+				PreprocessorDefinitions="CMAKE_INTDIR=\&quot;Release\&quot;"
+				ObjectFile="$(IntDir)\"
+/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				PreprocessorDefinitions="CMAKE_INTDIR=\&quot;Release\&quot;"/>
+			<Tool
+				Name="VCMIDLTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				MkTypLibCompatible="false"
+				TargetEnvironment="1"
+				GenerateStublessProxies="true"
+				TypeLibraryName="$(InputName).tlb"
+				OutputDirectory="$(IntDir)"
+				HeaderFileName="$(InputName).h"
+				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName="$(InputName)_p.c"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+		</Configuration>
+		<Configuration
+			Name="MinSizeRel|Win32"
+			OutputDirectory="MinSizeRel"
+			IntermediateDirectory="ZERO_CHECK.dir\MinSizeRel"
+			ConfigurationType="10"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				AssemblerListingLocation="MinSizeRel/"
+				ExceptionHandling="0"
+				PreprocessorDefinitions="CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"
+				ObjectFile="$(IntDir)\"
+/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				PreprocessorDefinitions="CMAKE_INTDIR=\&quot;MinSizeRel\&quot;"/>
+			<Tool
+				Name="VCMIDLTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				MkTypLibCompatible="false"
+				TargetEnvironment="1"
+				GenerateStublessProxies="true"
+				TypeLibraryName="$(InputName).tlb"
+				OutputDirectory="$(IntDir)"
+				HeaderFileName="$(InputName).h"
+				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName="$(InputName)_p.c"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+		</Configuration>
+		<Configuration
+			Name="RelWithDebInfo|Win32"
+			OutputDirectory="RelWithDebInfo"
+			IntermediateDirectory="ZERO_CHECK.dir\RelWithDebInfo"
+			ConfigurationType="10"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				AssemblerListingLocation="RelWithDebInfo/"
+				ExceptionHandling="0"
+				PreprocessorDefinitions="CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"
+				ObjectFile="$(IntDir)\"
+/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				PreprocessorDefinitions="CMAKE_INTDIR=\&quot;RelWithDebInfo\&quot;"/>
+			<Tool
+				Name="VCMIDLTool"
+				AdditionalIncludeDirectories="D:\msgpack\msgpack-c\.;D:\msgpack\msgpack-c\include;"
+				MkTypLibCompatible="false"
+				TargetEnvironment="1"
+				GenerateStublessProxies="true"
+				TypeLibraryName="$(InputName).tlb"
+				OutputDirectory="$(IntDir)"
+				HeaderFileName="$(InputName).h"
+				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName="$(InputName)_p.c"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+		</Configuration>
+	</Configurations>
+	<Files>
+		<Filter
+			Name="CMake Rules"
+			Filter="">
+			<File
+				RelativePath="D:\msgpack\msgpack-c\CMakeFiles\generate.stamp.rule">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+					Name="VCCustomBuildTool"
+					Description="Checking Build System"
+					CommandLine="&quot;C:\Program Files (x86)\CMake\bin\cmake.exe&quot; -HD:/msgpack/msgpack-c -BD:/msgpack/msgpack-c --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file &quot;$(SolutionPath)&quot;&#x0D;&#x0A;if errorlevel 1 goto :VCReportError"
+					AdditionalDependencies="&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCXXInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeGenericSystem.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeParseArguments.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeRCInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeSystemSpecificInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeSystemSpecificInitialize.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckCXXSourceCompiles.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckIncludeFiles.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckLibraryExists.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckSymbolExists.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindDoxygen.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindGTest.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindThreads.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindZLIB.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC-C.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC-CXX.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\WindowsPaths.cmake&quot;;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeCCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeCXXCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeRCCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeSystem.cmake;D:\msgpack\msgpack-c\CMakeLists.txt;D:\msgpack\msgpack-c\msgpack.pc.in;"
+					Outputs="D:\msgpack\msgpack-c\CMakeFiles\generate.stamp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+					Name="VCCustomBuildTool"
+					Description="Checking Build System"
+					CommandLine="&quot;C:\Program Files (x86)\CMake\bin\cmake.exe&quot; -HD:/msgpack/msgpack-c -BD:/msgpack/msgpack-c --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file &quot;$(SolutionPath)&quot;&#x0D;&#x0A;if errorlevel 1 goto :VCReportError"
+					AdditionalDependencies="&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCXXInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeGenericSystem.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeParseArguments.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeRCInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeSystemSpecificInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeSystemSpecificInitialize.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckCXXSourceCompiles.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckIncludeFiles.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckLibraryExists.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckSymbolExists.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindDoxygen.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindGTest.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindThreads.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindZLIB.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC-C.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC-CXX.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\WindowsPaths.cmake&quot;;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeCCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeCXXCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeRCCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeSystem.cmake;D:\msgpack\msgpack-c\CMakeLists.txt;D:\msgpack\msgpack-c\msgpack.pc.in;"
+					Outputs="D:\msgpack\msgpack-c\CMakeFiles\generate.stamp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="MinSizeRel|Win32">
+					<Tool
+					Name="VCCustomBuildTool"
+					Description="Checking Build System"
+					CommandLine="&quot;C:\Program Files (x86)\CMake\bin\cmake.exe&quot; -HD:/msgpack/msgpack-c -BD:/msgpack/msgpack-c --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file &quot;$(SolutionPath)&quot;&#x0D;&#x0A;if errorlevel 1 goto :VCReportError"
+					AdditionalDependencies="&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCXXInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeGenericSystem.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeParseArguments.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeRCInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeSystemSpecificInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeSystemSpecificInitialize.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckCXXSourceCompiles.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckIncludeFiles.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckLibraryExists.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckSymbolExists.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindDoxygen.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindGTest.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindThreads.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindZLIB.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC-C.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC-CXX.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\WindowsPaths.cmake&quot;;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeCCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeCXXCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeRCCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeSystem.cmake;D:\msgpack\msgpack-c\CMakeLists.txt;D:\msgpack\msgpack-c\msgpack.pc.in;"
+					Outputs="D:\msgpack\msgpack-c\CMakeFiles\generate.stamp"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="RelWithDebInfo|Win32">
+					<Tool
+					Name="VCCustomBuildTool"
+					Description="Checking Build System"
+					CommandLine="&quot;C:\Program Files (x86)\CMake\bin\cmake.exe&quot; -HD:/msgpack/msgpack-c -BD:/msgpack/msgpack-c --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file &quot;$(SolutionPath)&quot;&#x0D;&#x0A;if errorlevel 1 goto :VCReportError"
+					AdditionalDependencies="&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCXXInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeCommonLanguageInclude.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeGenericSystem.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeParseArguments.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeRCInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeSystemSpecificInformation.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CMakeSystemSpecificInitialize.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckCXXSourceCompiles.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckIncludeFiles.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckLibraryExists.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\CheckSymbolExists.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindDoxygen.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindGTest.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindPackageHandleStandardArgs.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindPackageMessage.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindThreads.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\FindZLIB.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC-C.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC-CXX.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows-MSVC.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\Windows.cmake&quot;;&quot;C:\Program Files (x86)\CMake\share\cmake-3.1\Modules\Platform\WindowsPaths.cmake&quot;;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeCCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeCXXCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeRCCompiler.cmake;D:\msgpack\msgpack-c\CMakeFiles\3.1.0\CMakeSystem.cmake;D:\msgpack\msgpack-c\CMakeLists.txt;D:\msgpack\msgpack-c\msgpack.pc.in;"
+					Outputs="D:\msgpack\msgpack-c\CMakeFiles\generate.stamp"/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

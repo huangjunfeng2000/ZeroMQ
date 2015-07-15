@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\examples\C++\hwserver.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\wuserver.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\identity.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\lbbroker.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\lpserver.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\mdbroker.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\msgqueue.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\mtrelay.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\mtserver.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\ppqueue.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\psenvpub.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\rrbroker.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\rtdealer.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\rtreq.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\spqueue.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\suisnail.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\syncpub.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\tasksink.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\tasksink2.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\tripping.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C\espresso.c">
+      <Filter>C</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C\clonesrv1.c">
+      <Filter>C</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C\kvsimple.c">
+      <Filter>C</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\mdbroker_GDS.cpp">
+      <Filter>GDS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\jsonAPI.cpp">
+      <Filter>GDS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\examples\C++\msgdefine.cpp">
+      <Filter>GDS</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="cpp">
+      <UniqueIdentifier>{ff35d7c2-ca70-4b5b-99d4-3f9705856600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="C">
+      <UniqueIdentifier>{9d573bd1-e47d-45b8-ae3a-f29f03978632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GDS">
+      <UniqueIdentifier>{ad3bd495-24b8-489c-9c67-b4b6729b471b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\examples\C\kvsimple.h">
+      <Filter>C</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\C++\jsonAPI.h">
+      <Filter>GDS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\examples\C++\msgdefine.h">
+      <Filter>GDS</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
