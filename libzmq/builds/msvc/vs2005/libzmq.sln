@@ -38,6 +38,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestServer", "TestServer\Te
 		{641C5F36-32EE-4323-B740-992B651CF9D6} = {641C5F36-32EE-4323-B740-992B651CF9D6}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppSQLiteDemo", "..\..\..\..\CppSQLite3_2\CppSQLiteDemo\CppSQLiteDemo.vcproj", "{39935D9A-E07F-47A2-A17F-6B64DEA66271}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -123,6 +125,16 @@ Global
 		{29D061D8-B7FF-4106-BC59-FED3C5F9D1EB}.StaticRelease|Win32.Build.0 = Release|Win32
 		{29D061D8-B7FF-4106-BC59-FED3C5F9D1EB}.WithOpenPGM|Win32.ActiveCfg = Release|Win32
 		{29D061D8-B7FF-4106-BC59-FED3C5F9D1EB}.WithOpenPGM|Win32.Build.0 = Release|Win32
+		{39935D9A-E07F-47A2-A17F-6B64DEA66271}.Debug|Win32.ActiveCfg = Debug|Win32
+		{39935D9A-E07F-47A2-A17F-6B64DEA66271}.Debug|Win32.Build.0 = Debug|Win32
+		{39935D9A-E07F-47A2-A17F-6B64DEA66271}.Release|Win32.ActiveCfg = Release|Win32
+		{39935D9A-E07F-47A2-A17F-6B64DEA66271}.Release|Win32.Build.0 = Release|Win32
+		{39935D9A-E07F-47A2-A17F-6B64DEA66271}.StaticDebug|Win32.ActiveCfg = Debug|Win32
+		{39935D9A-E07F-47A2-A17F-6B64DEA66271}.StaticDebug|Win32.Build.0 = Debug|Win32
+		{39935D9A-E07F-47A2-A17F-6B64DEA66271}.StaticRelease|Win32.ActiveCfg = Release|Win32
+		{39935D9A-E07F-47A2-A17F-6B64DEA66271}.StaticRelease|Win32.Build.0 = Release|Win32
+		{39935D9A-E07F-47A2-A17F-6B64DEA66271}.WithOpenPGM|Win32.ActiveCfg = Debug|Win32
+		{39935D9A-E07F-47A2-A17F-6B64DEA66271}.WithOpenPGM|Win32.Build.0 = Debug|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

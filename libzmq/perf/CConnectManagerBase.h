@@ -1,6 +1,12 @@
 #pragma once
 #include <string>
 
+enum SQL_CMD_TYPE{
+	SCT_NONE,
+	SCT_QUERY,
+	SCT_DML,
+	SCT_DML_BIN
+};
 class CConnectManagerBase
 {
 public:

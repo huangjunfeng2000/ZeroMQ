@@ -12,7 +12,7 @@
 #include <iostream>
 
 #define bExport true
-
+#pragma warning (disable:4996)
 using namespace std;
 CMQSqlQuery::CMQMsgInfo::CMQMsgInfo()
 {
@@ -22,6 +22,10 @@ CMQSqlQuery::CMQMsgInfo::CMQMsgInfo()
 	pVal = NULL;
 	iCurIndex = 0;
 	iRowIndex = 0;
+}
+void CMQSqlQuery::Reset()
+{
+	msgInfo.Init(reply);
 }
 void CMQSqlQuery::CMQMsgInfo::Init(zmq_msg_t &reply)
 {
@@ -56,10 +60,6 @@ const msgpack::object &CMQSqlQuery::CMQMsgInfo::next()
 
 CMQSqlQuery::CMQSqlQuery()
 {
-	//iFieldCount = 0;
-	//off = 0;
-	//iSize = 0;
-	//pVal = NULL;
 	zmq_msg_init (&reply);
 }
 CMQSqlQuery::~CMQSqlQuery()
@@ -123,7 +123,6 @@ void CMQSqlQuery::printval(const msgpack::object &msgObj)
 		break;
 	case msgpack::type::STR:
 		{
-			//bool tempVal = msgObj.as<bool>();
 			int iSize = msgObj.via.str.size;
 			const char *tempVal = msgObj.via.str.ptr;
 			std::string str(tempVal, iSize);
@@ -155,523 +154,237 @@ void CMQSqlQuery::printval(const msgpack::object &msgObj)
 		assert(false);
 		break;
 	}
-	//++iFieldIndex;
+}
+////////////////////////////////////////////////////////
+//CMQSqRecord::CMQSqRecord()
+//{
+//	m_MQSqlQuery = NULL; 
+//	m_bMQQuery = false;
+//}
+//CMQSqRecord::~CMQSqRecord()
+//{
+//
+//}
+//CMQSqRecord::CMQSqRecord(CMQSqlQuery *sqlQuery) : m_MQSqlQuery(sqlQuery), m_bMQQuery(true)
+//{
+//
+//}
+////////////////////////////////////////////////////////
+CMQSqlDML::CMQSqlDML()
+{
+	m_bResult = false;
+	zmq_msg_init (&reply);
+}
+CMQSqlDML::~CMQSqlDML()
+{
+	zmq_msg_close (&reply);
 }
 
+void CMQSqlDML::InitState()
+{
+	const char *pVal = (const char *)zmq_msg_data(&reply);
+	size_t iSize = zmq_msg_size(&reply);
+	bool m_bActive = iSize > 0;
+	size_t off = 0;
+	if (m_bActive)
+	{
+		msgpack::unpacked msg;
+		msgpack::unpack(msg, pVal, iSize, off);
+		m_bResult = msg.get().as<bool>();
+	}
+}
 //////////////
 CConnectManagerClient::CConnectManagerClient(void *prequester)
 {
+	m_bStreamWrite = false;
 	requester = prequester;
+	m_bBatchOpenBlobStream = false;
+	m_pIOStream = new std::stringstream(stringstream::in | stringstream::out | stringstream::binary);
 }
 CConnectManagerClient::~CConnectManagerClient()
 {
-
+	delete m_pIOStream;
 }
-
+std::string CombineSql(int iType, const std::string &strSql)
+{
+	std::string strQuery = ASCII2UTF_8(strSql);
+	char str[10];
+	memset(str, 0, 10);
+	itoa(iType, str, 10);
+	return std::string(str) + " " + strQuery;
+}
 
 CMQSqlQuery *CConnectManagerClient::ExecQuery(const std::string &strSql)
 {
 	static int iQurIndex = 0;
-	std::string strQuery = ASCII2UTF_8(strSql);
-	std::cout <<endl <<  "Query(" << ++iQurIndex <<"): " << "(" << strQuery.substr(0, 60) << ")";
-	//strQuery += '\0';
+	msgpack::sbuffer sbuf;
+	msgpack::packer<msgpack::sbuffer> packer(sbuf);
+	packer.pack(int(SCT_QUERY));
+	packer.pack(strSql);
+	//std::string strQuery = CombineSql(SCT_QUERY, strSql);//ASCII2UTF_8(strSql);
+	std::cout <<endl <<  "Query(" << ++iQurIndex <<"): " << "(" << strSql.substr(0, 60) << ")";
 
 	zmq_msg_t request;
-	zmq_msg_init_data (&request, (void *)strQuery.c_str(), strQuery.length() + 1, NULL, NULL);
+	//zmq_msg_init_data (&request, (void *)strQuery.c_str(), strQuery.length() + 1, NULL, NULL);
+	zmq_msg_init_data (&request, (void *)sbuf.data(), sbuf.size(), NULL, NULL);
+
 	zmq_sendmsg (requester, &request, 0);
 	zmq_msg_close (&request);
 
-	//zmq_msg_t reply;
 	CMQSqlQuery *pSqlQuery = new CMQSqlQuery;
 	zmq_recvmsg (requester, &pSqlQuery->reply, 0);
 	pSqlQuery->InitState();
 	return pSqlQuery;
-	//int start1 = GetTickCount();
-
 }
 
+bool CConnectManagerClient::ExecCommand(const std::string &strSql, int iCmdType)
+{
+	static int iQurIndex = 0;
+	//std::string strQuery = CombineSql(SCT_DML, strSql);//ASCII2UTF_8(strSql);
+	msgpack::sbuffer sbuf;
+	msgpack::packer<msgpack::sbuffer> packer(sbuf);
+	packer.pack(int(iCmdType));
+	packer.pack(strSql);
+	if (iCmdType == SCT_DML_BIN)
+	{
+		m_pIOStream->seekp(0, ios::end);
+		int iLen = m_pIOStream->tellp();
+		iLen = iLen < 0 ? 0 : iLen;
+		m_pIOStream->seekp(0, ios::beg);
+		//const char *tempVal = (const char *)m_pIOStream->rdbuf();
+		packer.pack_bin(iLen);
+		packer.pack_bin_body(m_pIOStream->str().c_str(), iLen);
+	}
+	std::cout <<endl <<  "DML(" << ++iQurIndex <<"): " << "(" << strSql.substr(0, 60) << ")";
+	zmq_msg_t request;
+	zmq_msg_init_data (&request, (void *)sbuf.data(), sbuf.size(), NULL, NULL);
 
+	//zmq_msg_init_data (&request, (void *)strQuery.c_str(), strQuery.length() + 1, NULL, NULL);
+	zmq_sendmsg (requester, &request, 0);
+	zmq_msg_close (&request);
 
+	CMQSqlDML pSqlDML;
+	zmq_recvmsg (requester, &pSqlDML.reply, 0);
+	pSqlDML.InitState();
+	std::cout << endl <<  "Result: " << pSqlDML.m_bResult;
+	return pSqlDML.m_bResult;
+}
 
+bool CConnectManagerClient::BeginTrans()
+{
+	return ExecCommand("begin transaction;");
+}
+bool CConnectManagerClient::CommitTrans()
+{
+	return ExecCommand("commit transaction;");
+}
+bool CConnectManagerClient::RollbackTrans()
+{
+	return ExecCommand("rollback transaction;");
+}
+std::stringstream *CConnectManagerClient::OpenStream(const std::string &tablename, const std::string &keyName, 
+							  int id, const std::string &blobName, bool bWrite)
+{
+	char strSql[100];
+	memset(strSql, 0, 100);
+	if (!bWrite)
+	{
+		sprintf(strSql, "SELECT %s, %s FROM %s WHERE %s=%d", keyName.c_str(), blobName.c_str(), tablename.c_str(), keyName.c_str(), id);
+		MQSqlQuery pQury(ExecQuery(strSql));
+		if (pQury.get() && pQury->next())
+		{
+			assert(2 == pQury->msgInfo.iFieldCount);
+			const msgpack::object &objID = pQury->nextvalue();
+			assert(objID.as<int>() == id);
+			const msgpack::object &objStr = pQury->nextvalue();
+			const char *tempVal = objStr.via.bin.ptr;
+			int iSize = objStr.via.bin.size;
+			m_pIOStream->str("");
+			m_pIOStream->write(tempVal, iSize);
+			//std::cout <<endl << "OpenStream(read): " << std::string(strSql).substr(0, 60);
+			std::cout << "Value: " << setw(-60) << m_pIOStream->str().substr(0, 60);
 
-
-//using namespace std;
-////UTF-8转Unicode  
-//std::wstring Utf82Unicode(const std::string& utf8string)  
-//{  
-//	int widesize = ::MultiByteToWideChar(CP_UTF8, 0, utf8string.c_str(), -1, NULL, 0);  
-//	if (widesize == ERROR_NO_UNICODE_TRANSLATION)  
-//	{  
-//		throw std::exception("Invalid UTF-8 sequence.");  
-//	}  
-//	if (widesize == 0)  
-//	{  
-//		throw std::exception("Error in conversion.");  
-//	}  
-//
-//	std::vector<wchar_t> resultstring(widesize);  
-//
-//	int convresult = ::MultiByteToWideChar(CP_UTF8, 0, utf8string.c_str(), -1, &resultstring[0], widesize);  
-//
-//	if (convresult != widesize)  
-//	{  
-//		throw std::exception("La falla!");  
-//	}  
-//
-//	return std::wstring(&resultstring[0]);  
-//}  
-//
-////unicode 转为 ascii  
-//
-//string WideByte2Acsi(wstring& wstrcode)  
-//{  
-//	int asciisize = ::WideCharToMultiByte(CP_OEMCP, 0, wstrcode.c_str(), -1, NULL, 0, NULL, NULL);  
-//	if (asciisize == ERROR_NO_UNICODE_TRANSLATION)  
-//	{  
-//		throw std::exception("Invalid UTF-8 sequence.");  
-//	}  
-//	if (asciisize == 0)  
-//	{  
-//		throw std::exception("Error in conversion.");  
-//	}  
-//	std::vector<char> resultstring(asciisize);  
-//	int convresult =::WideCharToMultiByte(CP_OEMCP, 0, wstrcode.c_str(), -1, &resultstring[0], asciisize, NULL, NULL);  
-//
-//	if (convresult != asciisize)  
-//	{  
-//		throw std::exception("La falla!");  
-//	}  
-//
-//	return std::string(&resultstring[0]);  
-//}  
-//
-////utf-8 转 ascii  
-//
-//string UTF_82ASCII(string& strUtf8Code)  
-//{  
-//	string strRet("");  
-//
-//
-//	//先把 utf8 转为 unicode   
-//	wstring wstr = Utf82Unicode(strUtf8Code);  
-//
-//	//最后把 unicode 转为 ascii  
-//	strRet = WideByte2Acsi(wstr);  
-//
-//
-//	return strRet;  
-//}  
-//
-/////////////////////////////////////////////////////////////////////////  
-//
-////ascii 转 Unicode  
-//
-//wstring Acsi2WideByte(string& strascii)  
-//{  
-//	int widesize = MultiByteToWideChar (CP_ACP, 0, (char*)strascii.c_str(), -1, NULL, 0);  
-//	if (widesize == ERROR_NO_UNICODE_TRANSLATION)  
-//	{  
-//		throw std::exception("Invalid UTF-8 sequence.");  
-//	}  
-//	if (widesize == 0)  
-//	{  
-//		throw std::exception("Error in conversion.");  
-//	}  
-//	std::vector<wchar_t> resultstring(widesize);  
-//	int convresult = MultiByteToWideChar (CP_ACP, 0, (char*)strascii.c_str(), -1, &resultstring[0], widesize);  
-//
-//	if (convresult != widesize)  
-//	{  
-//		throw std::exception("La falla!");  
-//	}  
-//
-//	return std::wstring(&resultstring[0]);  
-//}  
-//
-////Unicode 转 Utf8  
-//
-//std::string Unicode2Utf8(const std::wstring& widestring)  
-//{  
-//	int utf8size = ::WideCharToMultiByte(CP_UTF8, 0, widestring.c_str(), -1, NULL, 0, NULL, NULL);  
-//	if (utf8size == 0)  
-//	{  
-//		throw std::exception("Error in conversion.");  
-//	}  
-//
-//	std::vector<char> resultstring(utf8size);  
-//
-//	int convresult = ::WideCharToMultiByte(CP_UTF8, 0, widestring.c_str(), -1, &resultstring[0], utf8size, NULL, NULL);  
-//
-//	if (convresult != utf8size)  
-//	{  
-//		throw std::exception("La falla!");  
-//	}  
-//
-//	return std::string(&resultstring[0]);  
-//}  
-//
-////ascii 转 Utf8  
-//
-//string ASCII2UTF_8(string& strAsciiCode)  
-//{  
-//	string strRet("");  
-//
-//
-//	//先把 ascii 转为 unicode   
-//	wstring wstr = Acsi2WideByte(strAsciiCode);  
-//
-//	//最后把 unicode 转为 utf8  
-//
-//	strRet = Unicode2Utf8(wstr);  
-//
-//
-//	return strRet;  
-//} 
-//
-////#include <unistd.h>
-//#include <conio.h>
-//int main_req () {
-//	void *context = zmq_init (1);
-//	// Socket to talk to server
-//	printf ("Connecting to hello world server...\n");
-//	void *requester = zmq_socket (context, ZMQ_REQ);
-//	zmq_connect (requester, "tcp://localhost:5555");
-//	int request_nbr;
-//	for (request_nbr = 0; request_nbr != 1000; request_nbr++) {
-//		zmq_msg_t request;
-//		zmq_msg_init_data (&request, "Hello", 6, NULL, NULL);
-//		printf ("Sending request %d...\n", request_nbr);
-//		zmq_sendmsg (requester, &request, 0);
-//		zmq_msg_close (&request);
-//		zmq_msg_t reply;
-//		zmq_msg_init (&reply);
-//		zmq_recvmsg (requester, &reply, 0);
-//		printf ("Received reply %d: [%s]\n", request_nbr,
-//			(char *) zmq_msg_data (&reply));
-//		zmq_msg_close (&reply);
-//	}
-//	zmq_close (requester);
-//	zmq_term (context);
-//	return 0;
-//}
-//
-//int main_req_file_trans () {
-//	void *context = zmq_init (1);
-//	// Socket to talk to server
-//	printf ("Connecting to hello world server...\n");
-//	void *requester = zmq_socket (context, ZMQ_REQ);
-//	zmq_connect (requester, "tcp://localhost:5555");
-//	int request_nbr = 0;
-//		const char *strFile = "c:\\Column2.bmp";
-//
-//
-//	for (request_nbr = 0; request_nbr < 400; request_nbr++) 
-//	{
-//		int start = GetTickCount();
-//		char str[30];
-//		//for (int i=0; i<100; ++i)
-//		int i=0;
-//		int iStart = 0;
-//		int iCount = 3000 + (request_nbr +1 ) * 5000;
-//		int iWriteCount = 0;
-//		while(true)
-//		{
-//			memset(str, '\0', 30);
-//			sprintf_s(str, "%d %d ", iStart, iCount);
-//			iStart += iCount;
-//			++i;
-//			zmq_msg_t request;
-//			zmq_msg_init_data (&request, str, strlen(str), NULL, NULL);
-//			//printf ("Sending request %s...\n", str);
-//			zmq_sendmsg (requester, &request, 0);
-//			zmq_msg_close (&request);
-//			zmq_msg_t reply;
-//			zmq_msg_init (&reply);
-//			zmq_recvmsg (requester, &reply, 0);
-//			int iReadCount = zmq_msg_size(&reply);
-//
-//			if (iReadCount==0)
-//				break;
-//			//printf ("Received reply %d: [%-4d] \n", i, 
-//			//	iReadCount/*, (char *) zmq_msg_data (&reply)*/);
-//			//if (request_nbr == 0)
-//			//{
-//				int start1 = GetTickCount();
-//				void *pVal = zmq_msg_data(&reply);
-//				if (FILE *fp = fopen(strFile, i==1 ? "wb" : "ab"))
-//				//if (FILE *fp = fopen(strFile, i>0 ? "wb" : "ab"))
-//				{
-//					fseek(fp, 0, SEEK_END);
-//					fwrite(pVal, iReadCount, 1, fp);
-//					fclose(fp);
-//				}
-//				int stop1 = GetTickCount();
-//				iWriteCount += stop1 - start1;
-//			//}
-//
-//			zmq_msg_close (&reply);
-//		}
-//		int stop = GetTickCount();
-//		printf("time: %d %d total:%d ms write:%d ms\n", i, iCount, stop - start, iWriteCount);
-//	}
-//	zmq_close (requester);
-//	zmq_term (context);
-//
-//	getch();
-//	return 0;
-//}
-//
-//int main_req_file_trans_pack () {
-//	void *context = zmq_init (1);
-//	// Socket to talk to server
-//	printf ("Connecting to hello world server...\n");
-//	void *requester = zmq_socket (context, ZMQ_REQ);
-//	zmq_connect (requester, "tcp://localhost:5555");
-//	int request_nbr = 0;
-//	const char *strFile = "c:\\Column2.bmp";
-//
-//
-//	for (request_nbr = 100; request_nbr < 600; request_nbr++) 
-//	{
-//		int start = GetTickCount();
-//		char str[30];
-//		//for (int i=0; i<100; ++i)
-//		int i=0;
-//		int iStart = 0;
-//		int iCount = 3000 + (request_nbr +1 ) * 5000;
-//		int iWriteCount = 0;
-//		while(true)
-//		{
-//			memset(str, '\0', 30);
-//			sprintf_s(str, "%d %d ", iStart, iCount);
-//			iStart += iCount;
-//			++i;
-//			zmq_msg_t request;
-//			zmq_msg_init_data (&request, str, strlen(str), NULL, NULL);
-//			//printf ("Sending request %s...\n", str);
-//			zmq_sendmsg (requester, &request, 0);
-//			zmq_msg_close (&request);
-//			zmq_msg_t reply;
-//			zmq_msg_init (&reply);
-//			zmq_recvmsg (requester, &reply, 0);
-//			int iReadCount = zmq_msg_size(&reply);
-//
-//
-//			//printf ("Received reply %d: [%-4d] \n", i, 
-//			//	iReadCount/*, (char *) zmq_msg_data (&reply)*/);
-//			//if (request_nbr == 0)
-//			//{
-//			int start1 = GetTickCount();
-//			void *pVal = zmq_msg_data(&reply);
-//			int iSize = zmq_msg_size(&reply);
-//			std::size_t off = 0;
-//			msgpack::unpacked msgPack;
-//			msgpack::unpack(msgPack, (char *)pVal, iSize);
-//			const msgpack::object& packObj = msgPack.get();
-//			msgpack::type::ext_ref val2;
-//			packObj.convert(val2);
-//			//char *pResStr = packObj.as<char *>();
-//			int iReadCount2 = val2.size();
-//			iReadCount = iReadCount2;
-//			int iValType = val2.type();
-//			if (iReadCount==0)
-//				break;
-//			pVal = (void *)val2.data();//msgPack.buffer();
-//			if (FILE *fp = fopen(strFile, i==1 ? "wb" : "ab"))
-//			//if (FILE *fp = fopen(strFile, i>0 ? "wb" : "ab"))
-//			{
-//				fseek(fp, 0, SEEK_END);
-//				fwrite(pVal, iReadCount, 1, fp);
-//				fclose(fp);
-//			}
-//			int stop1 = GetTickCount();
-//			iWriteCount += stop1 - start1;
-//			//}
-//
-//			zmq_msg_close (&reply);
-//		}
-//		int stop = GetTickCount();
-//		printf("time: %d %d total:%d ms write:%d ms\n", i, iCount, stop - start, iWriteCount);
-//	}
-//	zmq_close (requester);
-//	zmq_term (context);
-//
-//	getch();
-//	return 0;
-//}
-//
-//int main_req_db_trans_pack () {
-//	void *context = zmq_init (1);
-//	// Socket to talk to server
-//	printf ("Connecting to hello world server...\n");
-//	void *requester = zmq_socket (context, ZMQ_REQ);
-//	zmq_connect (requester, "tcp://localhost:5555");
-//	int request_nbr = 0;
-//	const char *strFile = "c:\\Column2.bmp";
-//
-//	enum {sqlCount = 3};
-//	std::string strQur[sqlCount] = {
-//		"select * from tbl_wellinfo;",
-//		"update tbl_wellinfo set wellname=\"A\"",
-//		"select max(wellid) as maxid from tbl_wellinfo;"
-//	};
-//
-//	bool bExport = false;
-//	for (int i = 0; i < sqlCount; i++) 
-//	{
-//		int start = GetTickCount();
-//		char str[300];
-//		//for (int i=0; i<100; ++i)
-//		//int i=0;
-//		int iStart = 0;
-//		//int iCount = 3000 + (request_nbr +1 ) * 5000;
-//		int iWriteCount = 0;
-//		//while(true)
-//		{
-//			memset(str, '\0', 300);
-//			std::string strQuery = ASCII2UTF_8(strQur[i]);
-//			sprintf_s(str, "%s", strQuery.c_str());
-//			std::cout <<endl <<  "Query(" << i+1 <<"): " << "(" << strQuery.substr(0, 60) << ")";
-//			//iStart += iCount;
-//			//++i;
-//			
-//			zmq_msg_t request;
-//			zmq_msg_init_data (&request, str, strlen(str)+1, NULL, NULL);
-//			//printf ("Sending request %s...\n", str);
-//			zmq_sendmsg (requester, &request, 0);
-//			zmq_msg_close (&request);
-//			zmq_msg_t reply;
-//			zmq_msg_init (&reply);
-//			zmq_recvmsg (requester, &reply, 0);
-//			//int iReadCount = zmq_msg_size(&reply);
-//
-//			//printf ("Received reply %d: [%-4d] \n", i, 
-//			//	iReadCount/*, (char *) zmq_msg_data (&reply)*/);
-//			//if (request_nbr == 0)
-//			//{
-//			int start1 = GetTickCount();
-//			const char *pVal = (const char *)zmq_msg_data(&reply);
-//			size_t iSize = zmq_msg_size(&reply);
-//
-//			std::size_t off = 0;
-//			msgpack::unpacked msg;
-//			msgpack::unpack(msg, pVal, iSize, off);
-//			int iFieldCount = msg.get().as<int>();
-//			//for (int i=0; i<iFieldCount; ++i)
-//			int iFieldIndex = 0;
-//			int iRowIndex = 0;
-//			while(off < iSize)
-//			{
-//				iFieldIndex = iFieldIndex % (iFieldCount);
-//				if (iFieldIndex == 0 && bExport)
-//					printf("\n--------------------------V%-3d--------------------------\n", ++iRowIndex);
-//				msgpack::unpack(msg, pVal, iSize, off);
-//				const msgpack::object& msgObj = msg.get();
-//				if (msgObj.is_nil())
-//				{
-//					if (iFieldIndex != iFieldCount-1)
-//						assert(false);
-//					break;
-//				}			
-//				
-//				switch(msgObj.type)
-//				{
-//				case msgpack::type::BOOLEAN:
-//					{
-//						bool tempVal = msgObj.as<bool>();
-//						if (bExport) 
-//							printf("%d ", tempVal);
-//					}
-//					break;
-//				case msgpack::type::POSITIVE_INTEGER:
-//				case msgpack::type::NEGATIVE_INTEGER:
-//					{
-//						int tempVal = msgObj.as<int>();
-//						if (bExport)
-//							printf("%d ", tempVal);
-//					}
-//					break;
-//				case msgpack::type::FLOAT:
-//					{
-//						float tempVal = msgObj.as<float>();
-//						if (bExport)
-//							printf("%.3f ", tempVal);
-//					}
-//					break;
-//				case msgpack::type::STR:
-//					{
-//						//bool tempVal = msgObj.as<bool>();
-//						int iSize = msgObj.via.str.size;
-//						const char *tempVal = msgObj.via.str.ptr;
-//						std::string str(tempVal, iSize);
-//						str = UTF_82ASCII(str);
-//						if (bExport)
-//							printf("%s ", iSize ? str.c_str() : "NL");
-//					}
-//					break;
-//				case msgpack::type::BIN:
-//					{
-//						const char *tempVal = msgObj.via.bin.ptr;
-//						int iSize = msgObj.via.bin.size;
-//						if (bExport)
-//							printf("BLOB(%d) ", iSize);
-//					}
-//					break;
-//				case msgpack::type::EXT:
-//					{
-//						const char *tempVal = msgObj.via.ext.data();
-//						int iSize = msgObj.via.bin.size;
-//						if (bExport)
-//							printf("EXT(%d) ", "EXT");
-//					}
-//					break;
-//				case msgpack::type::NIL:
-//					assert(false);
-//					break;
-//				default:
-//					assert(false);
-//					break;
-//				}
-//				++iFieldIndex;
-//			}
-//			//std::size_t off = 0;
-//			//msgpack::unpacked msgPack;
-//			//msgpack::unpacker pac; 
-//			//pac.reserve_buffer(iSize);
-//
-//
-//			//msgpack::unpack(msgPack, (char *)pVal, iSize);
-//
-//
-//			//msgpack::type::ext_ref val2;
-//			//msgPack.get().convert(val2);
-//
-//			//char *pResStr = packObj.as<char *>();
-//			//int iReadCount2 = val2.size();
-//			//iReadCount = iReadCount2;
-//			//int iValType = val2.type();
-//			//if (iReadCount==0)
-//			//	break;
-//			//pVal = (void *)val2.data();//msgPack.buffer();
-//			//if (FILE *fp = fopen(strFile, i==1 ? "wb" : "ab"))
-//			//	//if (FILE *fp = fopen(strFile, i>0 ? "wb" : "ab"))
-//			//{
-//			//	fseek(fp, 0, SEEK_END);
-//			//	fwrite(pVal, iReadCount, 1, fp);
-//			//	fclose(fp);
-//			//}
-//			int stop1 = GetTickCount();
-//			//iWriteCount += stop1 - start1;
-//			//}
-//
-//			zmq_msg_close (&reply);
-//		}
-//		int stop = GetTickCount();
-//		printf("\ntotal:%d ms\n", stop - start);
-//	}
-//	zmq_close (requester);
-//	zmq_term (context);
-//
-//	getch();
-//	return 0;
-//}
+			return m_pIOStream;
+		}
+	}
+	else
+	{
+		assert(!m_bStreamWrite);
+		m_bStreamWrite = true;
+		sprintf(strSql, "UPDATE %s SET %s = ? WHERE %s=%d", tablename.c_str(), blobName.c_str(), keyName.c_str(), id);
+		m_strWriteSql = strSql;
+		m_pIOStream->str("");
+		return m_pIOStream;
+	}
+	return NULL;
+}
+bool CConnectManagerClient::StartBatchOpenStream(const std::string &tablename, const std::string &keyName, 
+						  const std::string &strCondition, const std::string &blobName)
+{
+	std::string strSql = "Select " + keyName + ", " + blobName + " " + "From " + tablename + " where " +  strCondition + " order by " + keyName;
+	if (CMQSqlQuery *pQuery = ExecQuery(strSql))
+	{
+		m_BatchQuery = MQSqlQuery(pQuery);
+		if (pQuery->isActive())
+			m_bBatchOpenBlobStream = true;
+		else
+			m_BatchQuery.reset();
+	}
+	return m_bBatchOpenBlobStream;
+}
+std::stringstream *CConnectManagerClient::NextBlobStream(int &id)
+{
+	if (m_BatchQuery.get() && m_BatchQuery->next())
+	{
+		assert(2 == m_BatchQuery->msgInfo.iFieldCount);
+		const msgpack::object &objID = m_BatchQuery->nextvalue();
+		id = objID.as<int>();
+		const msgpack::object &objStr = m_BatchQuery->nextvalue();
+		const char *tempVal = objStr.via.bin.ptr;
+		int iSize = objStr.via.bin.size;
+		m_pIOStream->str("");
+		m_pIOStream->write(tempVal, iSize);
+		std::cout << "NextBlobStream: " << id << " " << setw(-60) << m_pIOStream->str().substr(0, 60);
+		return m_pIOStream;
+	}
+	return NULL;
+}
+bool CConnectManagerClient::CloseStream()
+{
+	if (m_bStreamWrite)
+	{
+		assert(!m_strWriteSql.empty());
+		m_bStreamWrite = false;
+		return ExecCommand(m_strWriteSql, SCT_DML_BIN);
+	}
+	if (m_bBatchOpenBlobStream)
+	{
+		m_BatchQuery.reset();
+		m_bBatchOpenBlobStream = false;
+	}
+	return true;
+}
+bool CConnectManagerClient::GetTables(std::vector<std::string> &tableNames)
+{
+	tableNames.resize(0);
+	std::string strSql = "select name from sqlite_master where type='table'";
+	MQSqlQuery pQury(ExecQuery(strSql));
+	while (pQury.get() && pQury->next())
+	{
+		assert(1 == pQury->msgInfo.iFieldCount);
+		const msgpack::object &objStr = pQury->nextvalue();
+		int iSize = objStr.via.str.size;
+		const char *tempVal = objStr.via.str.ptr;
+		std::string str(tempVal, iSize);
+		str = UTF_82ASCII(str);
+		tableNames.push_back(str);
+	}
+	return NULL != pQury.get();
+}
+CMQSqlQuery *CConnectManagerClient::GetTableInfo(const std::string &tableName)
+{
+	char strSql[50];
+	memset(strSql, 0, 50);
+	sprintf(strSql, "PRAGMA table_info(\"%s\");", tableName.c_str());
+	return ExecQuery(strSql);
+}
